@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>User Registration</h2>
+    <form id="userForm">
+      <input name="firstName" placeholder="First Name" required>
+      <input name="lastName" placeholder="Last Name" required>
+      <input name="mobile" placeholder="Mobile" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input name="street" placeholder="Street" required>
+      <input name="city" placeholder="City" required>
+      <input name="state" placeholder="State" required>
+      <input name="country" placeholder="Country" required>
+      <input name="loginId" placeholder="Login ID" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button  id="BTN" type="submit">Save</button>
+    </form>
+
+    <p id="msg"></p>
+    <a href="view.html">View All Users</a>
+  </div>
+
+  <script>
+    $("#userForm").on("submit", function(e) {
+      e.preventDefault();
+
+      $.post("/save", $(this).serialize())
+        .done(res => {
+          $("#msg").css("color","green").text(res.message);
+          this.reset();
+        })
+        .fail(err => {
+          $("#msg").css("color","red").text("Error: " + err.responseJSON.message);
+        });
+    });
+  </script>
+</body>
+</html>
